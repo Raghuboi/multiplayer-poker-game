@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="57" height="88" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<symbol id="suit" width="8" height="10">
+		<path d="M 2 0 l 2 2 l 2 -2 l 2 2 v 3 l -4 5 l -4 -5 v -3 z"></path>
+	</symbol>
+	<symbol id="rank" width="8" height="12">
+		<path d="M 0 0 h 8 v 10 l -2 2 h -4 l -2 -2 v -3 h 2 v 3 h 4 v -8 h -6 z"></path>
+	</symbol>
+	<symbol id="special" width="10" height="12">
+		<path d="M 4 0 h 1 v 2 l 2 -2 l 1 2 v 3 l -1 2 l -2 -2 v 7 h -1 v -8 h -2 v -1 h 2 z"></path>
+	</symbol>
+	<symbol id="index" width="57" height="88">
+		<use xlink:href="#rank" x="6" y="6"></use>
+		<use xlink:href="#suit" x="6" y="20"></use>
+	</symbol>
+	
+	<rect x="1.5" y="1.5" width="54" height="85" fill="#fff"></rect>
+	<path d="M 2 0 h 53 l 2 2 v 84 l -2 2 h -53 l -2 -2 v -84 z m 0 2 v 84 h 53 v -84 z"></path>
+	<g style="fill: #f00;">
+		<use xlink:href="#index"></use>
+		<use xlink:href="#index" transform="rotate(180, 28.5, 44)"></use>
+		<use xlink:href="#special" transform="translate(18.5, 32) scale(2)"></use>
+	</g>
+</svg>
