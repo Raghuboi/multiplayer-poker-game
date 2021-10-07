@@ -6,8 +6,8 @@ import io from 'socket.io-client'
 import Spinner from './Spinner'
 
 let socket
-const ENDPOINT = 'http://localhost:5000'
-//const ENDPOINT = 'https://raghu-poker-game.herokuapp.com/'
+//const ENDPOINT = 'http://localhost:5000'
+const ENDPOINT = 'https://raghu-poker-game.herokuapp.com/'
 
 const Homepage = () => {
     const [waiting, setWaiting] = useState([])

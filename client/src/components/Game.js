@@ -13,8 +13,8 @@ import chipsSound from '../assets/sounds/chips-sound.mp3'
 import cardFlipSound from '../assets/sounds/card-flip.mp3'
 
 let socket
-const ENDPOINT = 'http://localhost:5000'
-//const ENDPOINT = 'https://raghu-poker-game.herokuapp.com/'
+//const ENDPOINT = 'http://localhost:5000'
+const ENDPOINT = 'https://raghu-poker-game.herokuapp.com/'
 
 function Game(props) {
     const data = queryString.parse(props.location.search)

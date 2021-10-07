@@ -85,30 +85,47 @@
     height: fit-content;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
+    * {
+        font-size: clamp(8px, 10px, 12px);
+    }
+
     .game {
         margin: 0;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-    
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        flex-direction: row-reverse;
-        justify-self: center;
-        gap: 1rem;
-    
+
+        display: grid;
+        grid-template-areas: "cards cards cards"
+                            "cards cards cards"
+                            "info-left . game-buttons";
+        gap: 3rem;
+
         z-index: 1;
-        width: clamp(fit-content, 85%, 90%);
-        height: clamp(70%, 85%, 90%);
+        width: 85%;
+        min-height: fit-content;
+        max-height: 85%;
         color: white;
     
         background-color: var(--game-board-color);
-        padding: 1.5rem;
+        padding: 1rem;
         border-radius: 0.75rem;
         border: 0.4rem solid black;
-        overflow: hidden;
+        overflow: auto;
     }
+
+    .cards {
+        grid-area: cards;
+    }
+
+    .game-buttons, .end-screen {
+        grid-area: game-buttons;
+    }
+
+    .info-left {
+        grid-area: info-left;
+    }
+
 }
