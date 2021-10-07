@@ -3,14 +3,16 @@ import { Link, Redirect } from 'react-router-dom'
 import randomCodeGenerator from '../utils/randomCodeGenerator'
 import './Homepage.css'
 import io from 'socket.io-client'
+import Spinner from './Spinner'
 
 let socket
-//const ENDPOINT = 'http://localhost:5000'
-const ENDPOINT = 'https://raghu-poker-game.herokuapp.com/'
+const ENDPOINT = 'http://localhost:5000'
+//const ENDPOINT = 'https://raghu-poker-game.herokuapp.com/'
 
 const Homepage = () => {
     const [waiting, setWaiting] = useState([])
-    const [waitingToggle, setWaitingToggle] = useState(false)
+    const [waitingButtonToggle, setWaitingButtonToggle] = useState(false)
+    const [gameCodeButtonToggle, setGameCodeButtonToggle] = useState(false)
     const [code, setCode] = useState('')
     const [roomCode, setRoomCode] = useState('')
 
@@ -42,9 +44,9 @@ const Homepage = () => {
     }, [])
 
     useEffect(() => {
-        waitingToggle===false && socket.emit('waitingDisconnection')
-        waitingToggle===true && socket.emit('waiting')
-    }, [waitingToggle])
+        waitingButtonToggle===false && socket.emit('waitingDisconnection')
+        waitingButtonToggle===true && socket.emit('waiting')
+    }, [waitingButtonToggle])
 
     if (waiting.length>=2) {
 
@@ -70,20 +72,32 @@ const Homepage = () => {
     return (
         <div className='Homepage'>
             <div className='homepage-menu'>
-                <div className='homepage-form'>
-                    <div className='homepage-join'>
-                        <input type='text' placeholder='Game Code' onChange={(event) => {
+
+                {!waitingButtonToggle && <button className={gameCodeButtonToggle ? "form-button" : "home-button"} 
+                onClick={()=> {setGameCodeButtonToggle(!gameCodeButtonToggle)}}>{gameCodeButtonToggle ? "Go Back" : "Use Game Code"}</button>}
+                {gameCodeButtonToggle && !waitingButtonToggle && <div className='homepage-form game-code-form'>
+                    <div className='game-code-join'>
+                        <input id="game-code-input" type='text' placeholder='Game Code' onChange={(event) => {
                             if (event.target.value===null) alert('Try again.')
                             else setRoomCode(event.target.value)
-                        }}  />
-                        <Link to={`/play?roomCode=${roomCode}`}><button className="game-button green">JOIN GAME</button></Link>
+                        }}/>
+                        <Link to={`/play?roomCode=${roomCode}`}><button className="form-button">JOIN GAME</button></Link>
                     </div>
                     <h1>OR</h1>
-                    <div className='homepage-create'>
-                        <Link to={`/play?roomCode=${randomCodeGenerator(3)}`}><button className="game-button orange">CREATE GAME</button></Link>
-                        <button onClick={() => {setWaitingToggle(!waitingToggle)}} >{waitingToggle ? waiting.length+" in Queue!" : "AUTOMATIC MATCHMAKING"}</button>
+                    <div className='game-code-create'>
+                        <Link to={`/play?roomCode=${randomCodeGenerator(3)}`}><button className="form-button">CREATE GAME</button></Link>
                     </div>
-                </div>
+                </div>}
+
+                {!gameCodeButtonToggle && <div className="homepage-form waiting-form">
+                    <button className={waitingButtonToggle ? "form-button" : "home-button"} 
+                    onClick={() => {setWaitingButtonToggle(!waitingButtonToggle)}} >{waitingButtonToggle ? "Go Back" : "Use Matchmaking"}</button>
+                    {waitingButtonToggle && !gameCodeButtonToggle && <div className="waiting-info">
+                        <Spinner/>
+                        <h1>{"Waiting, "+waiting.length+" in Queue."}</h1>
+                    </div>}
+                </div>}
+
             </div>
         </div>
     )

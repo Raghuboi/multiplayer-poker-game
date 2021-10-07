@@ -3,12 +3,16 @@
     font-family: 'Ubuntu Mono', monospace;
 }
 
+:root {
+    --bg-color: #800020;
+}
+
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
     width: 100vw;
-    background-color: #454545;
+    background-color: var(--bg-color);
     color: white;
 }
 

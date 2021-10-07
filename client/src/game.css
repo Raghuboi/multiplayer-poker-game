@@ -1,3 +1,10 @@
+:root {
+    --game-button-border: #454545;
+    --game-button-disabled-border: #FF0000;
+    --game-board-color: #226C3B;
+ 
+}
+
 .waiting {
     height: 100%;
     width: 100%;
@@ -33,7 +40,7 @@
     height: fit-content;
     color: white;
 
-    background-color: #226C3B;
+    background-color: var(--game-board-color);
     padding: 1.5rem;
     border-radius: 0.75rem;
     border: 0.4rem solid black;
@@ -56,7 +63,7 @@
 
 .game-button {
     border-radius: 0.25rem;
-    border: 2px solid #454545;
+    border: 2px solid var(--game-button-border);
     padding: 0.25rem;
 }
 
@@ -65,7 +72,7 @@
     background-color: black;
     font-weight: 500;
     color: white;
-    border: 2px solid #FF0000;
+    border: 2px solid var(--game-button-disabled-border);
     padding: 0.25rem;
 }
 
@@ -94,11 +101,11 @@
         gap: 1rem;
     
         z-index: 1;
-        width: fit-content;
-        height: fit-content;
+        width: clamp(fit-content, 85%, 90%);
+        height: clamp(70%, 85%, 90%);
         color: white;
     
-        background-color: #226C3B;
+        background-color: var(--game-board-color);
         padding: 1.5rem;
         border-radius: 0.75rem;
         border: 0.4rem solid black;
