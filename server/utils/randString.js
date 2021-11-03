@@ -1,11 +1,10 @@
-const randString = () => {
-    const len = 8
-    let randStr = ''
-    for (let i=0; i<len; i++) {
-        const ch = Math.floor((Math.random * 10) + 1)
-        randStr += ch
+function randString(length) {
+    var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    for ( var i = 0; i < length; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
     }
-    return randStr
+    return result;
 }
 
 module.exports = randString

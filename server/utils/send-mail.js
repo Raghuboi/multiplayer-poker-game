@@ -15,9 +15,9 @@ const sendMail = (email, uniqueString) => {
         from: sender,
         to: email,
         subject: "Email confirmation",
-        html: `Press <a href=${process.env.FRONTEND_ENDPOINT}/auth/verify/}>here</a> to verify your email, Thanks!`
+        html: `Press <a href="${process.env.FRONTEND_ENDPOINT}/verify?id=${uniqueString}">here</a> to verify your email, Thanks!`
     }
-
+    
     Transport.sendMail(mailOptions, function(error, response) {
         if (error) {
             console.log('Nodemailer:\n',error)

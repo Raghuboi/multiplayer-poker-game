@@ -1,6 +1,7 @@
 import { Route } from 'react-router-dom'
 import Homepage from './components/Homepage/Homepage'
-import Game from './components/Game/Game.js'
+import Game from './components/Game/Game'
+import Verify from './components/auth/Verify'
 import './App.css'
 import './cards.css'
 import './game.css'
@@ -25,7 +26,7 @@ const theme = extendTheme({
 })
 
 const App = () => {
-  const url = 'http://localhost:5000'
+  const url = process.env.REACT_APP_ENDPOINT
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -49,6 +50,7 @@ const App = () => {
         <ChakraProvider>
           <Route path='/' exact component={Homepage} />
           <Route path='/play' exact component={Game} />
+          <Route path='/verify' exact component={Verify} />
         </ChakraProvider>
       </UserContext.Provider>
     </div>

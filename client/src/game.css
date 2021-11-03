@@ -46,4 +46,8 @@
         min-height: fit-content;
         max-height: 85%;
     }
+
+    .game-board button {
+        width: 7.5rem;
+    }
 }

@@ -103,7 +103,7 @@ router.post('/signup', verifyJWT, async (req, res, next) => {
         if (usernameExists) res.status(409).json({ error: 'Username already exists' })
         else {
             const hash = await bcrypt.hash(password, SALT_ROUNDS)
-            const uniqueString = randString()
+            const uniqueString = randString(10)
             const user = await new User({
                 email: email,
                 username: username,
@@ -122,16 +122,16 @@ router.post('/signup', verifyJWT, async (req, res, next) => {
     next()
 })
 
-router.get('/verify/', async (req, res) => {
-    console.log(req)
+router.get('/verify/:uniqueString', async (req, res) => {
     const { uniqueString } = req.params
     const user = await User.findOne({ uniqueString: uniqueString })
-    if (user) {
+    if (user && !user.isValid) {
         user.isValid = true
         await user.save()
-        res.redirect('/')
+        res.status(200).send("verified")
+        console.log("verified a user")
     } else {
-        res.json('User not found')
+        res.status(401).send("not found")
     }
 })
 

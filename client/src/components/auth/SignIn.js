@@ -17,7 +17,8 @@ import {
     ModalBody,
     ModalFooter,
     Spacer,
-    useDisclosure
+    useDisclosure,
+    AlertDescription
 } from '@chakra-ui/react'
 
 const url = process.env.REACT_APP_ENDPOINT
@@ -101,7 +102,7 @@ export default function SignIn(props) {
                 status="error" 
             >
                 <AlertIcon/>
-                {response.error}
+                <AlertDescription>{response.error}</AlertDescription>
             </Alert>}
             <Formik 
                 initialValues={initialValues} 
