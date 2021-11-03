@@ -8,74 +8,13 @@
     width: var(--house-card-width);
 }
 
-.player-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
 .player-card, .player-card-back {
     height: calc(var(--house-card-height)*4/5);
     width: calc(var(--house-card-width)*4/5);
     margin: 0 0.5rem;
 }
 
-.player-2, .player-1 {
-    width: max-content;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.cards {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.house-cards {
-    position: relative;
-    width: 39.315rem;
-    display: flex;
-    flex-direction: row;
-    justify-content:flex-start;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.end-screen {
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: whitesmoke;
-    padding: 0.75rem;
-    border-radius: 0.25rem;
-}
-
-.info {
-    position: absolute;
-    left: 5px;
-    top: 5px;
-    color: black;
-    background-color: whitesmoke;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-}
-
-.info-item {
-    margin: 0;
-}
-
 @media (max-width: 1000px) {
-    * {
-      font-size: 12px;
-    }
     .card {
         height: calc(var(--house-card-height)*4/5);
         width: calc(var(--house-card-width)*4/5);

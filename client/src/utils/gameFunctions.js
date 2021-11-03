@@ -1,19 +1,24 @@
-export function getHand(playerDeck, houseDeck) {
+export function getHand(pDeck, hDeck) {
     var valueMatch=[], suitMatch={}, twoMatches=[], threeMatches=[], fourMatches=[]
     var hand={type: 'None'}
+
+    const playerDeck = pDeck.filter(item => { if (item) return item })
+    const houseDeck = hDeck.filter(item => { if (item) return item })
 
     // combining the player's cards (playerDeck) with the community cards (houseDeck) into a single deck for ease of access 
     // also replacing J,Q,K,A suits with numerical values (11,12,13,14) for consistency
 
     const combined = playerDeck && houseDeck && playerDeck.concat(houseDeck).map(item => {
-        if (item && item.value === 'J') return {suit: item.suit, value: 11}
+        if (!item) return 
+        else if (item.value === 'J') return {suit: item.suit, value: 11}
         else if (item.value === 'Q') return {suit: item.suit, value: 12}
         else if (item.value === 'K') return {suit: item.suit, value: 13}
         else if (item.value === 'A') return {suit: item.suit, value: 14}
         else return {suit: item.suit, value: item.value}
       })
 
-    if (combined===null || combined===undefined) return "Error"
+    if (!combined) return "Error"
+    console.log(combined, 'Combined')
       
     // seperating values and suits to minimize the use of .map() later 
 
@@ -148,7 +153,7 @@ export function getHand(playerDeck, houseDeck) {
     return hand
 }
 
-export function getWinner(hand1, hand2) {
+export function getWinner(p1, p2, hand1, hand2) {
     const rank1 = getRank(hand1.type), rank2 = getRank(hand2.type) 
     
     function getRank(handType) {
@@ -170,28 +175,28 @@ export function getWinner(hand1, hand2) {
           return rank
     }
 
-    if (rank1 > rank2) return 'Player 1'
-    else if (rank1 < rank2) return 'Player 2'
+    if (rank1 > rank2) return p1
+    else if (rank1 < rank2) return p2
 
     else if (rank1 === rank2) {
         if (rank1!=='Royal Flush') {
 
-            if (hand1.primary > hand2.primary) return 'Player 1'
-            else if (hand1.primary < hand2.primary) return 'Player 2'
+            if (hand1.primary > hand2.primary) return p1
+            else if (hand1.primary < hand2.primary) return p2
 
             else if (hand1.primary === hand2.primary) {
 
                 if (hand1.secondary) { // checks if secondary criteria exists
 
-                    if (hand1.secondary > hand2.secondary) return 'Player 1'
-                    else if (hand1.secondary < hand2.secondary) return 'Player 2'
+                    if (hand1.secondary > hand2.secondary) return p1
+                    else if (hand1.secondary < hand2.secondary) return p2
 
                     else if (hand1.secondary === hand2.secondary) {
 
                         if (hand1.tertiary) { // checks if tertiary criteria exists
 
-                            if (hand1.tertiary > hand2.tertiary) return 'Player 1'
-                            else if (hand1.tertiary < hand2.tertiary) return 'Player 2'
+                            if (hand1.tertiary > hand2.tertiary) return p1
+                            else if (hand1.tertiary < hand2.tertiary) return p2
                             
                             else if (hand1.tertiary === hand2.tertiary) return 'Tie'
                         }

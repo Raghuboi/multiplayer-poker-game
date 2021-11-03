@@ -1,0 +1,9 @@
+.Homepage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--game-board-color);
+    font-family: 'Ubuntu Mono', monospace;
+}

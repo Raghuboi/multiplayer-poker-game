@@ -1,9 +1,17 @@
+require('dotenv').config()
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const socketio = require('socket.io')
 const http = require('http')
-const cors = require('cors')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users')
-const path = require('path')
+const authRoutes = require('./routes/auth')
+const bcrypt = require('bcrypt')
+const mongoose = require('mongoose')
+
+mongoose.connect(process.env.MONGO_ATLAS_URI)
+const db = mongoose.connection
+db.on('error', error => { console.error(error) })
+db.once('open', () => { console.log('Connected to database') })
 
 const PORT = process.env.PORT || 5000
 
@@ -11,11 +19,17 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
-app.use(cors())
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true)
+  res.header('Access-Control-Allow-Origin', req.headers.origin)
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept')
+  next()
+})
+app.use(express.json())
+app.use(cookieParser())
 
-app.get('/greeting', function(req, res) {
-    res.json({ greeting: 'Hello' }) 
-    })
+app.use('/auth', authRoutes)
 
 io.on('connection', socket => {
     
@@ -77,6 +91,7 @@ io.on('connection', socket => {
 
     socket.on('updateGameState', gameState => {
         const user = getUser(socket.id)
+        
         if(user)
             io.to(user.room).emit('updateGameState', gameState)
     })
