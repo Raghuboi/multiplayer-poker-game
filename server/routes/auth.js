@@ -9,12 +9,14 @@ const SALT_ROUNDS = 10
 const ACCESS_COOKIE_OPTIONS = {
     httpOnly: true,
     secure: false,
+    domain: process.env.FRONTEND_ENDPOINT,
     path: '/',
     maxAge: 2 * 60 * 1000
 }
 const REFRESH_COOKIE_OPTIONS = {
     httpOnly: true,
     secure: false,
+    domain: process.env.FRONTEND_ENDPOINT,
     path: '/',
     maxAge: 10 * 60 * 1000
 }
