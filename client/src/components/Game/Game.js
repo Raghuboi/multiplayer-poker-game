@@ -351,7 +351,9 @@ function Game(props) {
         }
         }, [restart])
 
-    return (
+        if (users.length<2) return (<h1>Waiting...</h1>) 
+    
+        return (
             <div className="game-bg noselect">
                 <div className="game-board">
                     <Box 

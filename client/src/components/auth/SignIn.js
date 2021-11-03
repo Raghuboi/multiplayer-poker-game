@@ -57,8 +57,6 @@ export default function SignIn(props) {
         setResponse(null)
     }
 
-    console.log(process.env.REACT_APP_ENDPOINT)
-
     if (user) return (
         <>
         <Button {...props} onClick={onOpen}>Profile</Button>

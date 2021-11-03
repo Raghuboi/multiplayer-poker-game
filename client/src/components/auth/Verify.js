@@ -9,8 +9,6 @@ export default function Verify(props) {
     const [verified, setVerified] = useState(false)
     var { id } = queryString.parse(props.location.search)
 
-    console.log(id)
-
     useEffect(() => {
             if (loading) {
                 fetch(`${url}/auth/verify/${id}`, {

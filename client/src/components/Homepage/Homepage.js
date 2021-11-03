@@ -16,8 +16,7 @@ import GameCodeModal from './GameCodeModal'
 import SignUp from '../auth/SignUp'
 
 let socket
-const ENDPOINT = 'http://localhost:5000'
-//const ENDPOINT = 'https://raghu-poker-game.herokuapp.com/'
+const ENDPOINT = process.env.REACT_APP_ENDPOINT
 
 const Homepage = () => {
     const [waiting, setWaiting] = useState([])
