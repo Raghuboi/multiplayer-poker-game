@@ -2,6 +2,8 @@ const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/auth/user')
+const randString = require('../utils/randString')
+const sendMail = require('../utils/send-mail')
 
 const SALT_ROUNDS = 10
 const ACCESS_COOKIE_OPTIONS = {
@@ -69,6 +71,7 @@ router.post('/signin', verifyJWT, async (req, res, next) => {
     try {
         const user = await User.findOne({ email: email })        
         if (!user) res.status(401).json( { error: 'Not found' })
+        else if  (!user.isValid) res.status(401).json( { error: 'Email not verified' } )
 
         else {
             const isValid = await bcrypt.compare(password, user.hash)
@@ -100,12 +103,16 @@ router.post('/signup', verifyJWT, async (req, res, next) => {
         if (usernameExists) res.status(409).json({ error: 'Username already exists' })
         else {
             const hash = await bcrypt.hash(password, SALT_ROUNDS)
+            const uniqueString = randString()
             const user = await new User({
                 email: email,
                 username: username,
-                hash: hash, 
+                hash: hash,
+                uniqueString: uniqueString,
+                isValid: false 
             }).save()
-            res.status(200).json({ message: 'Registered' })
+            await sendMail(email, uniqueString)
+            res.status(200).json({ message: 'Registered, verify your email to Sign In' })
         }
     } 
     catch (e) {
@@ -113,6 +120,19 @@ router.post('/signup', verifyJWT, async (req, res, next) => {
         res.status(500).json({ error: e.message })
     }
     next()
+})
+
+router.get('/verify/', async (req, res) => {
+    console.log(req)
+    const { uniqueString } = req.params
+    const user = await User.findOne({ uniqueString: uniqueString })
+    if (user) {
+        user.isValid = true
+        await user.save()
+        res.redirect('/')
+    } else {
+        res.json('User not found')
+    }
 })
 
 router.post('/signout', async (req, res, next) => {

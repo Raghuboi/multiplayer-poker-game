@@ -18,7 +18,7 @@ import {
     useDisclosure
 } from '@chakra-ui/react'
 
-const url = process.env.ENDPOINT
+const url = process.env.REACT_APP_ENDPOINT
 
 const initialValues = {
     email: '',

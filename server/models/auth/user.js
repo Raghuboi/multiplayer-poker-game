@@ -12,6 +12,15 @@ const userSchema = new mongoose.Schema({
     hash: {
         type: String,
         required: true,
+    },
+    uniqueString: {
+        type: String,
+        required: false
+    },
+    isValid: {
+        type: Boolean,
+        required: false,
+        default: false
     }
 }) 
 

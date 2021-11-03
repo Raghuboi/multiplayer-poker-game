@@ -16,17 +16,14 @@ import { UserContext } from '../../utils/UserContext'
 import RaiseModal from './RaiseModal'
 import {
     Button,
-    VStack,
     HStack,
     Flex,
     Heading,
-    Divider,
     Box,
-    Spacer
 } from '@chakra-ui/react'
 
 let socket
-const ENDPOINT = process.env.ENDPOINT
+const ENDPOINT = process.env.REACT_APP_ENDPOINT
 
 function Game(props) {
     const data = queryString.parse(props.location.search)
