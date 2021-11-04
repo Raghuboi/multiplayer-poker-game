@@ -22,13 +22,13 @@ export default function Cards({ numberOfTurns, player1Deck, player2Deck, houseDe
     }, [numberOfTurns])
 
     useEffect(() => {
-        if (currentUser === 'Player 1' && winner === 'Player 1') setP1Heading(`👑 ${player1Name} (You)`)            
+        if (currentUser === 'Player 1' && winner === player1Name) setP1Heading(`👑 ${player1Name} (You)`)            
         else if (currentUser === 'Player 1') setP1Heading(`${player1Name} (You)`)
-        else if (winner === 'Player 1') setP1Heading(`👑 ${player1Name}`)
+        else if (winner === player1Name) setP1Heading(`👑 ${player1Name}`)
         else setP1Heading(player1Name)        
-        if (currentUser === 'Player 2' && winner === 'Player 2') setP2Heading(`👑 ${player2Name} (You)`)            
+        if (currentUser === 'Player 2' && winner === player2Name) setP2Heading(`👑 ${player2Name} (You)`)            
         else if (currentUser === 'Player 2') setP2Heading(`${player2Name} (You)`)
-        else if (winner === 'Player 2') setP2Heading(`👑 ${player2Name}`)
+        else if (winner === player2Name) setP2Heading(`👑 ${player2Name}`)
         else setP2Heading(player2Name)    
     }, [winner, player1Name, player2Name, currentUser])
 

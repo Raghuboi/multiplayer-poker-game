@@ -280,7 +280,7 @@ function Game(props) {
     const [restart, setRestart] = useState(false)
 
     useEffect(() => {
-        if (gameOver===true && winner==='') {
+        if (gameOver===true && winner!==player1Name && winner!==player2Name && winner!=='Tie') {
             socket.emit('updateGameState', {
                 winner: getWinner(player1Name, player2Name, getHand(player1Deck, houseDeck), getHand(player2Deck, houseDeck)),
                 numberOfTurns: 8
@@ -293,7 +293,7 @@ function Game(props) {
             const player2Deck = shuffledCards.splice(0, 2)
             const houseDeck = shuffledCards.splice(0, 3)
             
-            if (winner===player1Name || winner==='Player 2') {
+            if (winner===player1Name) {
             socket.emit('initGameState', {
                 gameOver: false,
                 turn: 'Player 1',
@@ -306,15 +306,15 @@ function Game(props) {
                 numberOfTurns: 0,
                 winner: '',
                 pot: 0,
-                player1Name: 'Player 1',
-                player2Name: 'Player 2'
+                player1Name: player1Name,
+                player2Name: player2Name
             })
             }
 
-            else if (winner===player2Name || winner==='Player 2') {
+            else if (winner===player2Name) {
             socket.emit('initGameState', {
                 gameOver: false,
-                turn: 'Player 1',
+                turn: 'Player 2',
                 player1Deck: [...player1Deck],
                 player2Deck: [...player2Deck],
                 houseDeck: [...houseDeck],
@@ -324,8 +324,8 @@ function Game(props) {
                 numberOfTurns: 0,
                 winner: '',
                 pot: 0,
-                player1Name: 'Player 1',
-                player2Name: 'Player 2'
+                player1Name: player1Name,
+                player2Name: player2Name
             })
             }
 
