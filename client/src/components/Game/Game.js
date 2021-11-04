@@ -186,7 +186,8 @@ function Game(props) {
         }
         else if (numberOfTurns===8) {
             socket.emit('updateGameState', {
-                gameOver: true
+                gameOver: true,
+                winner: getWinner(player1Name, player2Name, getHand(player1Deck, houseDeck), getHand(player2Deck, houseDeck)),
             })
         }
 
@@ -283,7 +284,6 @@ function Game(props) {
         if (gameOver===true && winner!==player1Name && winner!==player2Name && winner!=='Tie') {
             socket.emit('updateGameState', {
                 winner: getWinner(player1Name, player2Name, getHand(player1Deck, houseDeck), getHand(player2Deck, houseDeck)),
-                numberOfTurns: 8
             })
         }
 
