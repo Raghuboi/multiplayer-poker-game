@@ -18,7 +18,6 @@ export function getHand(pDeck, hDeck) {
       })
 
     if (!combined) return "Error"
-    console.log(combined, 'Combined')
       
     // seperating values and suits to minimize the use of .map() later 
 

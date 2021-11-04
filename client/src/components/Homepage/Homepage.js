@@ -80,7 +80,7 @@ const Homepage = () => {
                 <Spacer/>                
                 <SignIn w="30%" size="lg"/>
                 {!(user) && <SignUp w="30%" size="lg"/>}
-                <GameCodeModal w="30%" size="lg"/>
+                <GameCodeModal w="30%" size="lg" />
                 <WaitingButton 
                     w="30%"
                     size="lg"

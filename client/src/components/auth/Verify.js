@@ -15,12 +15,11 @@ export default function Verify(props) {
                     method: 'GET',
                     credentials: 'include',
                 }).then(res => { 
-                    if (res.status==200) setVerified(true)
+                    if (res.status===200) setVerified(true)
                     setLoading(false)
                 })
             }
         }, [])
-        console.log(verified)
 
     if (loading) return(<h1>Loading...</h1>)
 

@@ -81,15 +81,15 @@ function Game(props) {
     const [localHand, setLocalHand] = useState('N/A')
 
      //runs once on component mount
-     useEffect(async () => {
+     useEffect(() => {
         //shuffle DECK_OF_CARDS array
-        const shuffledCards = await shuffleArray(DECK_OF_CARDS)
+        const shuffledCards = shuffleArray(DECK_OF_CARDS)
         //extract 2 cards to player1Deck
-        const player1Deck = await shuffledCards.splice(0, 2)
+        const player1Deck = shuffledCards.splice(0, 2)
         //extract 2 cards to player2Deck
-        const player2Deck = await shuffledCards.splice(0, 2)
+        const player2Deck = shuffledCards.splice(0, 2)
         //extract 3 cards to houseDeck
-        const houseDeck = await shuffledCards.splice(0, 3)
+        const houseDeck = shuffledCards.splice(0, 3)
 
         //send initial state to server
         socket.emit('initGameState', {
@@ -158,31 +158,31 @@ function Game(props) {
 
     }, [])
 
-    useEffect(async ()=> {
-        if (user && user.username && player1Name!=user.username && player2Name!=user.username) {
-            if (currentUser=='Player 1') socket.emit('updateGameState', { player1Name: user.username })
-            if (currentUser=='Player 2') socket.emit('updateGameState', { player2Name: user.username })
+    useEffect(()=> {
+        if (user && user.username && player1Name!==user.username && player2Name!==user.username) {
+            if (currentUser==='Player 1') socket.emit('updateGameState', { player1Name: user.username })
+            if (currentUser==='Player 2') socket.emit('updateGameState', { player2Name: user.username })
         }       
         socket.emit('updateGameState', {
             raiseAmount: 0
         })
         if (numberOfTurns===2) {
             socket.emit('updateGameState', { increment: 0 })
-            await playShufflingSound()
+            playShufflingSound()
         }
         else if (numberOfTurns===4) {
             socket.emit('updateGameState', {
                 houseDeck: [...houseDeck, shuffledDeck[0]],
                 increment: 0
             })
-            await playCardFlipSound()
+            playCardFlipSound()
         }
         else if (numberOfTurns===6) {
             socket.emit('updateGameState', {
                 houseDeck: [...houseDeck, shuffledDeck[1]],
                 increment: 0
             })
-            await playCardFlipSound()
+            playCardFlipSound()
         }
         else if (numberOfTurns===8) {
             socket.emit('updateGameState', {
@@ -190,8 +190,8 @@ function Game(props) {
             })
         }
 
-        if (!gameOver && currentUser === 'Player 1') await setLocalHand(getHand(player1Deck, houseDeck))
-        else if (!gameOver && currentUser === 'Player 2') await setLocalHand(getHand(player2Deck, houseDeck))
+        if (!gameOver && currentUser === 'Player 1') setLocalHand(getHand(player1Deck, houseDeck))
+        else if (!gameOver && currentUser === 'Player 2') setLocalHand(getHand(player2Deck, houseDeck))
     }, [numberOfTurns])
 
     async function callHandler() {
@@ -213,8 +213,8 @@ function Game(props) {
                 numberOfTurns: numberOfTurns+1,
                 pot: pot+increment,
             })
-            if (increment===0) await playCheckSound()
-            else await playChipsSound()
+            if (increment===0) playCheckSound()
+            else playChipsSound()
         }
     }
 
@@ -237,7 +237,7 @@ function Game(props) {
                 pot: pot+amount,
                 raiseAmount: amount
             })
-            await playChipsSound()
+            playChipsSound()
         }
 
         else if (currentUser==='Player 2') {
@@ -256,7 +256,7 @@ function Game(props) {
                 pot: pot+amount,
                 raiseAmount: amount
             })
-            await playChipsSound()
+            playChipsSound()
         }
     }
 
@@ -279,10 +279,10 @@ function Game(props) {
     const [shuffledDeck, setShuffledDeck] = useState('')
     const [restart, setRestart] = useState(false)
 
-    useEffect(async () => {
+    useEffect(() => {
         if (gameOver===true && winner==='') {
             socket.emit('updateGameState', {
-                winner: await getWinner(player1Name, player2Name, getHand(player1Deck, houseDeck), getHand(player2Deck, houseDeck)),
+                winner: getWinner(player1Name, player2Name, getHand(player1Deck, houseDeck), getHand(player2Deck, houseDeck)),
                 numberOfTurns: 8
             })
         }
@@ -293,7 +293,7 @@ function Game(props) {
             const player2Deck = shuffledCards.splice(0, 2)
             const houseDeck = shuffledCards.splice(0, 3)
             
-            if (winner===player1Name) {
+            if (winner===player1Name || winner==='Player 2') {
             socket.emit('initGameState', {
                 gameOver: false,
                 turn: 'Player 1',
@@ -311,7 +311,7 @@ function Game(props) {
             })
             }
 
-            else if (winner===player2Name) {
+            else if (winner===player2Name || winner==='Player 2') {
             socket.emit('initGameState', {
                 gameOver: false,
                 turn: 'Player 1',
@@ -347,7 +347,7 @@ function Game(props) {
             })
             }
             setRestart(false)
-            await setShuffledDeck(shuffledCards.splice(0, 2))
+            setShuffledDeck(shuffledCards.splice(0, 2))
         }
         }, [restart])
 
