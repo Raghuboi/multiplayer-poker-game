@@ -140,7 +140,8 @@ router.get('/verify/:uniqueString', async (req, res) => {
 router.post('/signout', async (req, res, next) => {
     /* remove cookies from request header */
     res.clearCookie('access')
-    res.clearCookie('refresh')    
+    res.clearCookie('refresh')
+    res.status(200)    
     next()
 })
 
