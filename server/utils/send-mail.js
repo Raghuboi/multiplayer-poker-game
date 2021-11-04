@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer')
+const getTemplateHTML = require('./confirmation-email-template')
 
 const sendMail = (email, uniqueString) => {
     var Transport = nodemailer.createTransport({
@@ -15,7 +16,7 @@ const sendMail = (email, uniqueString) => {
         from: sender,
         to: email,
         subject: "Email confirmation",
-        html: `Press <a href="${process.env.FRONTEND_ENDPOINT}/verify?id=${uniqueString}">here</a> to verify your email, Thanks!`
+        html: getTemplateHTML(`${process.env.FRONTEND_ENDPOINT}/verify?id=${uniqueString}`)
     }
     
     Transport.sendMail(mailOptions, function(error, response) {
