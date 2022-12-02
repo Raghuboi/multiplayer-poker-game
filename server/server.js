@@ -27,7 +27,7 @@ const io = socketio(server)
 const cors = require('cors')
 app.use(
 	cors({
-		origin: [process.env.FRONTEND_ENDPOINT, 'http://localhost:3000'],
+		origin: true,
 	})
 )
 app.use(express.json())
