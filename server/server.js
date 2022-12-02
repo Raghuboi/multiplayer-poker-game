@@ -26,7 +26,7 @@ const io = socketio(server)
 
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Credentials', true)
-	res.header('Access-Control-Allow-Origin', '*')
+	res.header('Access-Control-Allow-Origin', req.headers.origin)
 	res.header(
 		'Access-Control-Allow-Methods',
 		'GET,PUT,POST,DELETE,UPDATE,OPTIONS'
@@ -35,7 +35,14 @@ app.use(function (req, res, next) {
 		'Access-Control-Allow-Headers',
 		'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
 	)
-	next()
+	//intercepts OPTIONS method
+	if ('OPTIONS' === req.method) {
+		//respond with 200
+		res.send(200)
+	} else {
+		//move on
+		next()
+	}
 })
 app.use(express.json())
 app.use(cookieParser())
