@@ -25,6 +25,7 @@ const server = http.createServer(app)
 const io = socketio(server)
 
 const cors = require('cors')
+app.options('*', cors())
 app.use(
 	cors({
 		origin: true,
