@@ -26,7 +26,7 @@ const io = socketio(server)
 
 app.use(function (req, res, next) {
 	res.header('Access-Control-Allow-Credentials', true)
-	res.header('Access-Control-Allow-Origin', req.header('origin'))
+	res.header('Access-Control-Allow-Origin', req.headers.referer)
 	res.header(
 		'Access-Control-Allow-Methods',
 		'GET,PUT,POST,DELETE,UPDATE,OPTIONS'
