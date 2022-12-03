@@ -8,6 +8,7 @@ const authRoutes = require('./routes/auth')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const proxy = require('http-proxy-middleware')
 
 mongoose.connect(process.env.MONGO_ATLAS_URI)
 const db = mongoose.connection
@@ -21,8 +22,15 @@ db.once('open', () => {
 const PORT = process.env.PORT || 5000
 
 const app = express()
-app.use(cors({ origin: process.env.FRONTEND_ENDPOINT }))
 const server = http.createServer(app)
+app.use(cors({ origin: process.env.FRONTEND_ENDPOINT }))
+app.use(
+	'/auth',
+	proxy({
+		target: process.env.SERVER_ENDPOINT,
+		changeOrigin: true,
+	})
+)
 app.options('*', cors())
 app.use(express.json())
 app.use(cookieParser())
