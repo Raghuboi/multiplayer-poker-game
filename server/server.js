@@ -21,16 +21,15 @@ db.once('open', () => {
 const PORT = process.env.PORT || 5000
 
 const app = express()
-const server = http.createServer(app)
-const io = socketio(server)
-
 app.use(cors({ origin: process.env.FRONTEND_ENDPOINT }))
+const server = http.createServer(app)
 app.options('*', cors())
 app.use(express.json())
 app.use(cookieParser())
 
 app.use('/auth', authRoutes)
 
+const io = socketio(server)
 io.on('connection', (socket) => {
 	socket.on('waiting', () => {
 		socket.join('waitingRoom')
