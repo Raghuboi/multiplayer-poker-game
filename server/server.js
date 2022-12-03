@@ -24,7 +24,7 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
-app.use(cors())
+app.use(cors({ origin: process.env.FRONTEND_ENDPOINT }))
 app.options('*', cors())
 app.use(express.json())
 app.use(cookieParser())
