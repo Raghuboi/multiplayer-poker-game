@@ -7,7 +7,6 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require('./users')
 const authRoutes = require('./routes/auth')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
-const cors = require('cors')
 
 mongoose.connect(process.env.MONGO_ATLAS_URI)
 const db = mongoose.connection
@@ -22,15 +21,26 @@ const PORT = process.env.PORT || 5000
 
 const app = express()
 const server = http.createServer(app)
-app.use(cors({ origin: process.env.FRONTEND_ENDPOINT }))
-app.options('*', cors())
+const io = socketio(server)
+
+app.use(function (req, res, next) {
+	res.header('Access-Control-Allow-Credentials', true)
+	res.header('Access-Control-Allow-Origin', req.headers.origin)
+	res.header(
+		'Access-Control-Allow-Methods',
+		'GET,PUT,POST,DELETE,UPDATE,OPTIONS'
+	)
+	res.header(
+		'Access-Control-Allow-Headers',
+		'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+	)
+	next()
+})
 app.use(express.json())
 app.use(cookieParser())
 
 app.use('/auth', authRoutes)
-app.use(express.static('./build'))
 
-const io = socketio(server)
 io.on('connection', (socket) => {
 	socket.on('waiting', () => {
 		socket.join('waitingRoom')
