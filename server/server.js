@@ -17,7 +17,7 @@ db.once('open', () => {
 	console.log('Connected to database')
 })
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT
 
 const app = express()
 const server = http.createServer(app)
